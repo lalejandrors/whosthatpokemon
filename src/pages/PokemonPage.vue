@@ -1,25 +1,32 @@
 <template>
     <!-- Si necesito un agrupador para poner un condicional, no es necesario generar un div en mi plantilla, con la etiqueta template puedo crear el condicional sin generar divs adicionales -->
     <template v-if="!pokemon">
-        <h1>Espere por favor...</h1>
+        <p>Espere por favor...</p>
     </template>
     <template v-else>
-        <h1>Quién es es Pokemón?</h1>
-        <PokemonPicture :pokemon-id="pokemon.id" :show-pokemon="showPokemon" />
-        <!-- selectionPokemon lo puedo escribir como selection-pokemon aquí en el componente padre, en donde escucho lo que emite el hijo 
-        (cuando se da click en la lista que se creó en el hijo, se ejecuta la función checkAnswer del padre). Puedo pasar parametros también cómo en el ejemplo 
-        checkAnswer($event). No es necesario poner aquí el parámetro, ya que cuando es uno sólo, js infiere que es el que se va a recibir en checkAnswer -->
-        <PokemonOptions :pokemons="pokemonArr" @selected-pokemon="checkAnswer" />
-        <template v-if="showAnswer">
-            <h2>{{message}}</h2>
-            <button @click="newGame">Nuevo Juego</button>
-        </template>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                <PokemonPicture :pokemon-id="pokemon.id" :show-pokemon="showPokemon" />
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                <PokemonData />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <!-- selectionPokemon lo puedo escribir como selection-pokemon aquí en el componente padre, en donde escucho lo que emite el hijo 
+                (cuando se da click en la lista que se creó en el hijo, se ejecuta la función checkAnswer del padre). Puedo pasar parametros también cómo en el ejemplo 
+                checkAnswer($event). No es necesario poner aquí el parámetro, ya que cuando es uno sólo, js infiere que es el que se va a recibir en checkAnswer -->
+                <PokemonOptions :pokemons="pokemonArr" :show-answer="showAnswer" :message="message" @new-game="newGame" @selected-pokemon="checkAnswer" />
+            </div>
+        </div>
     </template>
 </template>
 
 <script>
 import PokemonPicture from '@/components/PokemonPicture'
 import PokemonOptions from '@/components/PokemonOptions'
+import PokemonData from '@/components/PokemonData'
 
 import getPokemonOptions from '@/helpers/getPokemonOptions'
 
@@ -27,7 +34,8 @@ export default {
     name: 'PokemonPage',
     components: {
         PokemonPicture,
-        PokemonOptions
+        PokemonOptions,
+        PokemonData
     },
     data(){//información reactiva
         return{

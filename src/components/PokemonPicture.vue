@@ -29,7 +29,6 @@ export default {
 </script>
 
 <style scoped>
-    /* Pokemon Picture */
     .pokemon-container {
         height: 200px;
     }

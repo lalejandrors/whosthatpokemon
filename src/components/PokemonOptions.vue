@@ -6,6 +6,10 @@
             <li v-for="pokemon in pokemons" :key="pokemon.id" @click="$emit('selectedPokemon', pokemon.id)">{{pokemon.name}}</li>
         </ul>
     </div>
+    <template v-if="showAnswer">
+        <p>{{message}}</p>
+        <button @click="$emit('newGame')">PLAY AGAIN</button>
+    </template>
 </template>
 
 <script>
@@ -15,13 +19,22 @@ export default {
         pokemons: {
             type: Array,
             required: true
-        }
+        },
+        showAnswer: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+        message: {
+            type: String,
+            required: true,
+            default: ""
+        },
     }
 }
 </script>
 
 <style scoped>
-    /* Pokemon Options */
     ul {
         list-style-type: none;
     }

@@ -1,5 +1,17 @@
 <template>
-  <PokemonPage />
+
+    <div class="row">
+      <div class="col-xl-1 col-xxl-2">
+        
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-8 pokemonPage">
+        <PokemonPage />
+      </div>
+      <div class="col-xl-1 col-xxl-2">
+        
+      </div>
+    </div>
+
 </template>
 
 <script>
@@ -13,13 +25,8 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+  .pokemonPage {
+    background-color: #fff;
+  }
 </style>
