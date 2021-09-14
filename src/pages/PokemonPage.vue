@@ -29,6 +29,7 @@ import PokemonOptions from '@/components/PokemonOptions'
 import PokemonData from '@/components/PokemonData'
 
 import getPokemonOptions from '@/helpers/getPokemonOptions'
+import getAnswerVoice from '@/helpers/getAnswerVoice'
 
 export default {
     name: 'PokemonPage',
@@ -53,15 +54,15 @@ export default {
             const rndInt = Math.floor(Math.random() * 4)
             this.pokemon = this.pokemonArr[rndInt]
         },
-        checkAnswer(selectedId){
+        async checkAnswer(selectedId){
             this.showPokemon = true
             this.showAnswer = true
 
-            if(selectedId === this.pokemon.id){
-                this.message = `Bien!, ${this.pokemon.name}`
-            }else{
-                this.message = `Ups :S, era ${this.pokemon.name}`
-            }
+            //si empieza por vocal, poner 'an' y si es por consonante 'a'
+            this.message = (['a', 'e', 'i', 'o', 'u'].indexOf((this.pokemon.name)[0].toLowerCase()) !== -1) ? `It's an ${this.pokemon.name}!` : `It's a ${this.pokemon.name}!`
+            this.message = (selectedId === this.pokemon.id) ? `You right, ${this.message}` : `Sorry, ${this.message}`
+
+            await getAnswerVoice(this.message)
         },
         newGame(){
             this.pokemonArr = []
