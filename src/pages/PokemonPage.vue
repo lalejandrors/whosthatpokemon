@@ -1,4 +1,5 @@
 <template>
+    <PokemonScore @selected-generation="changeGeneration" />
     <!-- Si necesito un agrupador para poner un condicional, no es necesario generar un div en mi plantilla, con la etiqueta template puedo crear el condicional sin generar divs adicionales -->
     <template v-if="!pokemon">
         <p>Espere por favor...</p>
@@ -27,6 +28,7 @@
 import PokemonPicture from '@/components/PokemonPicture'
 import PokemonOptions from '@/components/PokemonOptions'
 import PokemonData from '@/components/PokemonData'
+import PokemonScore from '@/components/PokemonScore'
 
 import getPokemonOptions from '@/helpers/getPokemonOptions'
 import getAnswerVoice from '@/helpers/getAnswerVoice'
@@ -36,7 +38,8 @@ export default {
     components: {
         PokemonPicture,
         PokemonOptions,
-        PokemonData
+        PokemonData,
+        PokemonScore
     },
     data(){//información reactiva
         return{
@@ -44,12 +47,13 @@ export default {
             pokemon: null,
             showPokemon: false,
             showAnswer: false,
-            message: ''
+            message: '',
+            generation: -1
         }
     },
     methods: {
         async mixPokemonArray(){//no asignamos directamente el valor en pokemonArr porque necesitabamos traer los datos con un método para poder resolver la promesa con el await
-            this.pokemonArr = await getPokemonOptions()
+            this.pokemonArr = await getPokemonOptions(this.generation)
 
             const rndInt = Math.floor(Math.random() * 4)
             this.pokemon = this.pokemonArr[rndInt]
@@ -64,13 +68,20 @@ export default {
 
             await getAnswerVoice(this.message)
         },
-        newGame(){
+        restartData(){
             this.pokemonArr = []
             this.pokemon = null
             this.showPokemon = false
             this.showAnswer = false
             this.message = ''
-
+        },
+        newGame(){
+            this.restartData()
+            this.mixPokemonArray()
+        },
+        changeGeneration(generation){
+            this.generation = generation
+            this.restartData()
             this.mixPokemonArray()
         }
     },
