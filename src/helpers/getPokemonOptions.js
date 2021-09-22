@@ -1,7 +1,7 @@
 import pokemonApi from '@/api/pokemonApi'
 
 const getPokemons = () => {
-    const positionsArr = Array.from(Array(892))//tengo un array de 892 posiciones undefined
+    const positionsArr = Array.from(Array(649))//tengo un array de 649 posiciones undefined
     const pokemonsArr = positionsArr.map((_,index) => index + 1)//la primera posición del array, el indice
 
     return pokemonsArr
@@ -27,21 +27,9 @@ const getPokemonOptions = async (generation) => {
     case 5:
         generationArr = pokemonsArr.slice(493,649)
         break;
-    case 6:
-        generationArr = pokemonsArr.slice(649,721)
-        break;    
-    case 7:
-        generationArr = pokemonsArr.slice(721,809)
-        break;
-    case 8:
-        generationArr = pokemonsArr.slice(809)
-        break;
-    case 0://de la generacion 1 a la 4
-        generationArr = pokemonsArr.slice(0,493)
-        break;  
-    case -1://todos
+    case 0://todas las generaciones
         generationArr = pokemonsArr
-        break; 
+        break;  
     default:
         generationArr = pokemonsArr
     }
@@ -52,7 +40,7 @@ const getPokemonOptions = async (generation) => {
     return pokemons
 }
 
-const getPokemonNames = async ([a,b,c,d] = []) => {//los desestructuro
+const getPokemonNames = async ([a,b,c,d] = []) => {
 
     const promiseArr = [
         pokemonApi.get(`/${a}`),//pokemonApi es el elemento Axios que hace la petición al Api
@@ -64,10 +52,10 @@ const getPokemonNames = async ([a,b,c,d] = []) => {//los desestructuro
     const [p1,p2,p3,p4] = await Promise.all(promiseArr)
     
     return [
-        {name: p1.data.name, id: p1.data.id},
-        {name: p2.data.name, id: p2.data.id},
-        {name: p3.data.name, id: p3.data.id},
-        {name: p4.data.name, id: p4.data.id}
+        {name: p1.data.name.toUpperCase(), id: p1.data.id},
+        {name: p2.data.name.toUpperCase(), id: p2.data.id},
+        {name: p3.data.name.toUpperCase(), id: p3.data.id},
+        {name: p4.data.name.toUpperCase(), id: p4.data.id}
     ]
 } 
 

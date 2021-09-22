@@ -4,7 +4,7 @@
       <div class="col-xl-1 col-xxl-2">
         
       </div>
-      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-8 pokemonPage">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10 col-xxl-8 pokemon-page">
         <PokemonPage />
       </div>
       <div class="col-xl-1 col-xxl-2">
@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style scoped>
-  .pokemonPage {
+  .pokemon-page {
     background-color: #fff;
   }
 </style>

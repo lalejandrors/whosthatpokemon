@@ -1,10 +1,12 @@
 <template>
     <div class="options-container">
-        <ul>
+        <div class="row options-container">
             <!-- el EMIT es una función de vue que permite establecer una comunicación con el componente padre para en éste caso en el evento click del 
             componente de la lista, ejecutar en el padre una función definida allí -->
-            <li v-for="pokemon in pokemons" :key="pokemon.id" @click="$emit('selectedPokemon', pokemon.id)">{{pokemon.name}}</li>
-        </ul>
+            <div v-for="pokemon in pokemons" :key="pokemon.id" @click="$emit('selectedPokemon', pokemon.id)" class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 pokemon-option">
+                {{pokemon.name}}
+            </div>
+        </div>
     </div>
     <template v-if="showAnswer">
         <p>{{message}}</p>
@@ -35,24 +37,17 @@ export default {
 </script>
 
 <style scoped>
-    ul {
-        list-style-type: none;
-    }
-    li {
+    .pokemon-option {
         background-color: white;
-        border-radius: 5px;
-        border: 1px solid rgba(0, 0, 0, 0.2);
         cursor: pointer;
         margin-bottom: 10px;
-        width: 250px;
     }
 
-    li:hover {
+    .pokemon-option:hover {
         background-color: rgba(0, 0, 0, 0.05);
     }
 
     .options-container {
-        display: flex;
-        justify-content: center;
+        padding: 30px;
     }
 </style>

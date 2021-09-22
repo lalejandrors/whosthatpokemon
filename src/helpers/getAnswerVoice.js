@@ -36,7 +36,7 @@ const getAnswerVoice = async (message) => {
     speech.speak({
         text: message,
     }).then(() => {
-        console.log("Success !")
+        console.log("Success!")
     }).catch(e => {
         console.error("An error occurred :", e)
     })
