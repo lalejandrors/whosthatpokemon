@@ -10,7 +10,7 @@
                 <PokemonPicture :pokemon-id="pokemon.id" :show-pokemon="showPokemon" />
             </div>
             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                <PokemonData />
+                <PokemonData :pokemon="pokemon" :pokemon-data="pokemonData" :show-data="showData" />
             </div>
         </div>
         <div class="row">
@@ -31,6 +31,7 @@ import PokemonData from '@/components/PokemonData'
 import PokemonScore from '@/components/PokemonScore'
 
 import getPokemonOptions from '@/helpers/getPokemonOptions'
+import getPokemonData from '@/helpers/getPokemonData'
 import getAnswerVoice from '@/helpers/getAnswerVoice'
 
 export default {
@@ -47,11 +48,14 @@ export default {
             pokemon: null,
             showPokemon: false,
             showAnswer: false,
+            showData: false,//si quiero mostrar los datos del pokemon
             message: '',
             selectedGeneration: 0,//la elegida en el select para la partida
             generation: null,//la generación real del pokemon correcto
             score: 0,
-            maxScore : 0
+            maxScore : 0,
+            enabled : true,//si se puede o no sumar puntaje
+            pokemonData : {}//la info que se trae de otros endpoints, que son la generación y las evoluciones
         }
     },
     computed: {//métodos que retornan información reactiva que se guarda en caché, que ayuda cuando necesito renderizar el resultado de éste método en varias partes del componente y se va a hacer el cálculo 1 SOLA VEZ, a menos de que algún dato del cálculo cambie. Su diferencia con los methods es el caché
@@ -60,10 +64,10 @@ export default {
 
             switch(this.generation) {
             case 1:
-                scorePokemon = 5
+                scorePokemon = 3
                 break;
             case 2:
-                scorePokemon = 6
+                scorePokemon = 5
                 break;
             case 3:
                 scorePokemon = 7
@@ -87,50 +91,54 @@ export default {
             this.pokemon = this.pokemonArr[rndInt]
         },
         async checkAnswer(selectedId){
+            if(this.enabled == false) return false;
+
+            this.enabled = false
             this.showPokemon = true
             this.showAnswer = true
 
             this.makeMessage(selectedId)
-            
-            if(this.selectedGeneration != 0){
-                this.generation = this.selectedGeneration
-            }else{
-                const genScore = this.checkGenerationScore(this.pokemon.id)
-                this.generation = genScore
-            }
+            getAnswerVoice(this.message)
 
+            this.setGeneration()
             this.setScore(selectedId)
 
-            await getAnswerVoice(this.message)
+            await this.setPokemonInfo()
+            this.showData = true
         },
         restartData(){
             this.pokemonArr = []
             this.pokemon = null
             this.showPokemon = false
             this.showAnswer = false
+            this.showData = false
             this.message = ''
+            this.enabled = true
+            this.PokemonData = {}
         },
         newGame(){
             this.restartData()
             this.mixPokemonArray()
         },
         changeGeneration(selectedGeneration){
-            this.selectedGeneration = selectedGeneration
+            this.selectedGeneration = parseInt(selectedGeneration)
+            this.score = 0
+
             this.restartData()
             this.mixPokemonArray()
         },
-        checkGenerationScore(pokemonId){
+        checkGenerationScore(){
             let generationPokemon = null
 
-            if(pokemonId > 0 && pokemonId < 152){
+            if(this.pokemon.id > 0 && this.pokemon.id < 152){
                 generationPokemon = 1
-            }else if(pokemonId > 151 && pokemonId < 252){
+            }else if(this.pokemon.id > 151 && this.pokemon.id < 252){
                 generationPokemon = 2
-            }else if(pokemonId > 251 && pokemonId < 387){
+            }else if(this.pokemon.id > 251 && this.pokemon.id < 387){
                 generationPokemon = 3
-            }else if(pokemonId > 386 && pokemonId < 494){
+            }else if(this.pokemon.id > 386 && this.pokemon.id < 494){
                 generationPokemon = 4
-            }else if(pokemonId > 493 && pokemonId < 650){
+            }else if(this.pokemon.id > 493 && this.pokemon.id < 650){
                 generationPokemon = 5
             }
 
@@ -158,6 +166,19 @@ export default {
             }else{
                 this.score = 0
             }
+        },
+        setGeneration(){
+            if(this.selectedGeneration != 0){
+                this.generation = this.selectedGeneration
+            }else{
+                const genScore = this.checkGenerationScore()
+                this.generation = genScore
+            }
+        },
+        async setPokemonInfo(){
+            const responsePokemonData = await getPokemonData(this.pokemon.id)
+            await new Promise(resolve => setTimeout(resolve, 500));//espera medio segundo para actualizar el length del array de las evoluciones
+            this.pokemonData = responsePokemonData
         }
     },
     mounted(){//evento de cuando se monta el componente, me llena con la info el data pokemonArr (uno de los momentos del ciclo de vida del componente)
