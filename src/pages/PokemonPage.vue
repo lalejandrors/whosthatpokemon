@@ -6,10 +6,10 @@
     </template>
     <template v-else>
         <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                <PokemonPicture :pokemon-id="pokemon.id" :show-pokemon="showPokemon" />
+            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                <PokemonPicture :pokemon="pokemon" :show-data="showData" />
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+            <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                 <PokemonData :pokemon="pokemon" :pokemon-data="pokemonData" :show-data="showData" />
             </div>
         </div>
@@ -18,7 +18,7 @@
                 <!-- selectionPokemon lo puedo escribir como selection-pokemon aquí en el componente padre, en donde escucho lo que emite el hijo 
                 (cuando se da click en la lista que se creó en el hijo, se ejecuta la función checkAnswer del padre). Puedo pasar parametros también cómo en el ejemplo 
                 checkAnswer($event). No es necesario poner aquí el parámetro, ya que cuando es uno sólo, js infiere que es el que se va a recibir en checkAnswer -->
-                <PokemonOptions :pokemons="pokemonArr" :show-answer="showAnswer" :message="message" @new-game="newGame" @selected-pokemon="checkAnswer" />
+                <PokemonOptions :pokemons="pokemonArr" :show-data="showData" :message="message" @new-game="newGame" @selected-pokemon="checkAnswer" />
             </div>
         </div>
     </template>
@@ -46,15 +46,12 @@ export default {
         return{
             pokemonArr: [],
             pokemon: null,
-            showPokemon: false,
-            showAnswer: false,
             showData: false,//si quiero mostrar los datos del pokemon
             message: '',
             selectedGeneration: 0,//la elegida en el select para la partida
-            generation: null,//la generación real del pokemon correcto
+            generation: null,//la generación del pokemon correcto
             score: 0,
             maxScore : 0,
-            enabled : true,//si se puede o no sumar puntaje
             pokemonData : {}//la info que se trae de otros endpoints, que son la generación y las evoluciones
         }
     },
@@ -91,12 +88,6 @@ export default {
             this.pokemon = this.pokemonArr[rndInt]
         },
         async checkAnswer(selectedId){
-            if(this.enabled == false) return false;
-
-            this.enabled = false
-            this.showPokemon = true
-            this.showAnswer = true
-
             this.makeMessage(selectedId)
             getAnswerVoice(this.message)
 
@@ -109,11 +100,8 @@ export default {
         restartData(){
             this.pokemonArr = []
             this.pokemon = null
-            this.showPokemon = false
-            this.showAnswer = false
             this.showData = false
             this.message = ''
-            this.enabled = true
             this.PokemonData = {}
         },
         newGame(){
@@ -177,7 +165,7 @@ export default {
         },
         async setPokemonInfo(){
             const responsePokemonData = await getPokemonData(this.pokemon.id)
-            await new Promise(resolve => setTimeout(resolve, 500));//espera medio segundo para actualizar el length del array de las evoluciones
+            await new Promise(resolve => setTimeout(resolve, 1000));//espera medio segundo para actualizar el length del array de las evoluciones
             this.pokemonData = responsePokemonData
         }
     },

@@ -5,20 +5,65 @@
 
 html, body {
     background-color: #000;
-    margin: 0px;
-    font-size: 16px;
+    margin: 0;
     font-family: 'pokeFont';
-    text-shadow: 2px 1px 2px gray;
 }
 
-button {
-    font-size: 16px;
-    font-family: 'pokeFont';
-    text-shadow: 2px 1px 2px gray;
-    background-color: rgba(0, 0, 0, 0);
-    border: none;
-    color: #000;
+/* media querys */
+/* X-Small devices (portrait phones, less than 576px) */
+@media screen and (max-width: 576px) {/*X-Small None*/
+    html, body {
+        font-size: 3vw;
+        text-align: center;
+    }
 }
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    html, body {
+        font-size: 2.5vw;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    html, body {
+        font-size: 2vw;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    html, body {
+        font-size: 2vw;
+    }
+}
+
+/* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    html, body {
+        font-size: 1.5vw;
+    }
+}
+
+/* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
+    html, body {
+        font-size: 1.2vw;
+    }
+}
+/* */
+
+/* modificaciones a bootstrap */
+.row>* {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.row {
+    --bs-gutter-x: 0;
+}
+/* */
 
 .fade-in {
     animation: fadeIn 0.3s;
