@@ -7,16 +7,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3 score-element">
                 Score: {{score}}
             </div>
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3 max-score-element">
                 Max Score: {{maxScore}}
             </div>
             <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3 filter-label">
                 Filter:
             </div>
-            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+            <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3 select-element">
                 <select v-model="generation" @change="$emit('selectedGeneration', generation)" id="select-generation">
                     <option value="0">All</option>
                     <option value="1">1st. Gen</option>
@@ -61,16 +61,30 @@ export default {
     .game-title{
         background-color: #E6DB9D;
         text-align: center;
+        border-bottom: 5px solid #63687B;
     }
 
     .filter-label{
         text-align: right;
     }
 
+    .score-element{
+        padding-left: 1%;
+    }
+
+    .select-element{
+        padding-right: 1%;
+    }
+
+    .max-score-element{
+        text-align: center;
+    }
+
     #select-generation{
         color: white;
         background-color: #6BC1CE;
         text-shadow: 2px 1px 2px black;
+        width: 100%;
     }
 
     /* media querys */
@@ -78,6 +92,11 @@ export default {
     @media screen and (max-width: 576px) {/*X-Small None*/
         .filter-label{
             display: none;
+        }
+
+        .select-element{
+            padding-left: 1%;
+            padding-right: 1%;
         }
     }
     /* */

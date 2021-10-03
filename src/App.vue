@@ -27,6 +27,6 @@ export default {
 
 <style scoped>
   .pokemon-page {
-    background-color: #fff;
+    background-color: #FFEBD6;
   }
 </style>

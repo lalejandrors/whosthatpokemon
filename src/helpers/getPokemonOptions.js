@@ -52,10 +52,10 @@ const getPokemonNames = async ([a,b,c,d] = []) => {
     const [p1,p2,p3,p4] = await Promise.all(promiseArr)
     
     return [
-        {name: p1.data.name.toUpperCase(), id: p1.data.id, types: p1.data.types, species: p1.data.species, height: p1.data.height, weight: p1.data.weight},
-        {name: p2.data.name.toUpperCase(), id: p2.data.id, types: p2.data.types, species: p2.data.species, height: p2.data.height, weight: p2.data.weight},
-        {name: p3.data.name.toUpperCase(), id: p3.data.id, types: p3.data.types, species: p3.data.species, height: p3.data.height, weight: p3.data.weight},
-        {name: p4.data.name.toUpperCase(), id: p4.data.id, types: p4.data.types, species: p4.data.species, height: p4.data.height, weight: p4.data.weight}
+        {name: p1.data.name.toUpperCase(), id: p1.data.id, types: p1.data.types, species: p1.data.species, height: p1.data.height, weight: p1.data.weight, abilities: p1.data.abilities},
+        {name: p2.data.name.toUpperCase(), id: p2.data.id, types: p2.data.types, species: p2.data.species, height: p2.data.height, weight: p2.data.weight, abilities: p2.data.abilities},
+        {name: p3.data.name.toUpperCase(), id: p3.data.id, types: p3.data.types, species: p3.data.species, height: p3.data.height, weight: p3.data.weight, abilities: p3.data.abilities},
+        {name: p4.data.name.toUpperCase(), id: p4.data.id, types: p4.data.types, species: p4.data.species, height: p4.data.height, weight: p4.data.weight, abilities: p4.data.abilities}
     ]
 } 
 

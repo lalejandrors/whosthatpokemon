@@ -1,10 +1,10 @@
 <template>
     <PokemonScore :score="score" :max-score="maxScore" @selected-generation="changeGeneration" />
     <!-- Si necesito un agrupador para poner un condicional, no es necesario generar un div en mi plantilla, con la etiqueta template puedo crear el condicional sin generar divs adicionales -->
-    <template v-if="!pokemon">
+    <div v-if="!pokemon">
         <p>Please wait...</p>
-    </template>
-    <template v-else>
+    </div>
+    <div class="border-container" v-else>
         <div class="row">
             <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                 <PokemonPicture :pokemon="pokemon" :show-data="showData" />
@@ -21,7 +21,12 @@
                 <PokemonOptions :pokemons="pokemonArr" :show-data="showData" :message="message" @new-game="newGame" @selected-pokemon="checkAnswer" />
             </div>
         </div>
-    </template>
+        <div class="row">
+            <div class="col-12">
+                <PokemonBrands />
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -29,6 +34,7 @@ import PokemonPicture from '@/components/PokemonPicture'
 import PokemonOptions from '@/components/PokemonOptions'
 import PokemonData from '@/components/PokemonData'
 import PokemonScore from '@/components/PokemonScore'
+import PokemonBrands from '@/components/PokemonBrands'
 
 import getPokemonOptions from '@/helpers/getPokemonOptions'
 import getPokemonData from '@/helpers/getPokemonData'
@@ -40,7 +46,8 @@ export default {
         PokemonPicture,
         PokemonOptions,
         PokemonData,
-        PokemonScore
+        PokemonScore,
+        PokemonBrands
     },
     data(){
         return{
@@ -135,7 +142,7 @@ export default {
         makeMessage(selectedId){
             this.message = (['a', 'e', 'i', 'o', 'u'].indexOf((this.pokemon.name)[0].toLowerCase()) !== -1) ? `It's an ${this.pokemon.name}!` : `It's a ${this.pokemon.name}!`
             if(selectedId === this.pokemon.id){
-                this.message = `You right, ${this.message}`
+                this.message = `You're right, ${this.message}`
             }else{
                 this.message = `Sorry, ${this.message}`
             }
@@ -176,6 +183,16 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    .border-container {
+        border: 5px solid #63687B;
+        background: linear-gradient(
+            to bottom,
+            #FFCBA9,
+            #FFCBA9 52%,
+            #FEAE93 48%,
+            #FEAE93
+        );
+        background-size: 100% 0.8%;
+    }
 </style>

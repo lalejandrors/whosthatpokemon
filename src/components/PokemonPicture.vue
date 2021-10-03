@@ -47,6 +47,8 @@ export default {
         height: 100%;
         color: white;
         text-shadow: 2px 1px 2px black;
+        border-right: 5px solid #63687B;
+        border-bottom: 5px solid #63687B;
     }
 
     .head-name {
@@ -54,8 +56,17 @@ export default {
     }
 
     .picture-container {
-        background-color: #F0EBEF;
+        background: linear-gradient(
+            to bottom,
+            #F0EBEF,
+            #F0EBEF 80%,
+            #FFF 20%,
+            #FFF
+        );
+        background-size: 100% 2.5%;
         height: 85%;
+        border: 4px solid #B78DD5;
+        border-radius: 6px;
     }
 
     .hidden-pokemon {
@@ -83,6 +94,22 @@ export default {
     @media screen and (max-width: 576px) {/*X-Small None*/
         .head-name{
             display: none;
+        }
+
+        .pokemon-container {
+            border-right: 0;
+        }
+
+        .picture-container {
+            background: linear-gradient(
+                to bottom,
+                #F0EBEF,
+                #F0EBEF 80%,
+                #FFF 20%,
+                #FFF
+            );
+            background-size: 100% 7%;
+            height: 80%;
         }
     }
     /* */
