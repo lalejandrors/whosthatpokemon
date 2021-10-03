@@ -153,7 +153,7 @@ export default {
                 
                 let maxScore = parseInt(localStorage.getItem('maxScore'))
 
-                if(this.score > maxScore){
+                if(this.score > maxScore || isNaN(maxScore)){
                     this.maxScore = localStorage.setItem('maxScore', this.score)
                 }
 
